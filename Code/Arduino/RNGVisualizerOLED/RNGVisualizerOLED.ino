@@ -2,7 +2,7 @@
 #include <Adafruit_SSD1306.h>
 
 #define input 9
-#define clock 10
+#define clock 13
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
@@ -46,7 +46,8 @@ void loop() {
       }
 
       Serial.println(num & B00001111);
-      displaySmth(num & B11111111);
+      displaySmth(num & B01111111);
+
       Serial.println("-------");
       
     }
