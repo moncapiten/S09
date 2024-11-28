@@ -11,15 +11,18 @@
   ((byte) & 0x02 ? '1' : '0'), \
   ((byte) & 0x01 ? '1' : '0') 
 
+FILE *fptr;
+char savingString[256];
 
 int main()
 {
+    sprintf(savingString, "");
     int startingArr = 0b11;
     int arr = startingArr;
     
     
-    for(int n = 1; n <= 30; n++){
-        int counter = 0;
+    for(int n = 1; n <= 35; n++){
+        int counter = 1;
         
         
         printf("--------\n n= %d\n", n);
@@ -38,11 +41,16 @@ int main()
         } while (arr != startingArr);
         
         printf("\nIt took %d cycles\n", counter);
+        sprintf(savingString, "%s\n%d\t%d", savingString, n, counter);
         
         startingArr = (startingArr<<1)+1;
         arr = startingArr;
     }
     
+    // Saves computed data to file
+    fptr = fopen("output.txt", "w");
+    fprintf(fptr, savingString);
+    fclose(fptr);
     
     return 0;
 }
