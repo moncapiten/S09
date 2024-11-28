@@ -23,13 +23,11 @@ def fancyprint(arr, counter):
 # number of bits we will work with
 cycles = []
 
-n =4
 
 
+for n in range(15, 16 ):
 
-for n in range(1, 2):
-
-    print(n)
+    print(f"n = {n}")
     # creating starting conditions
     arr = [ 1 for i in range(n+1) ]
     counter = 0
@@ -41,7 +39,7 @@ for n in range(1, 2):
         swap = arr[-1] ^ arr[-2]
         for i in range(len(arr)-1, 0, -1):
             arr[i] = arr[i - 1]
-            print(i)
+#            print(i)
         arr[0] = swap
 
         counter += 1
