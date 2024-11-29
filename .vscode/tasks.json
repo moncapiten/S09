@@ -9,6 +9,8 @@
                 "-g",
                 "${file}",
                 "-o",
+                "-pg",
+                "-g",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
