@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include <time.h>
 
 FILE *fptr;
@@ -14,15 +15,15 @@ void saveSmth(char *str){
 }
 
 
-unsigned long long int periodCalculation(int n, unsigned long long int startinNumber)
+uint_fast64_t periodCalculation(int n, uint_fast64_t startinNumber)
 {
-    unsigned long long int counter = 0;
-    unsigned long long int arr = startinNumber;
+    uint_fast64_t counter = 0;
+    uint_fast64_t arr = startinNumber;
     do {
         counter++;
-        unsigned long long int bit0 = arr & 1;            // Extract the least significant bit
-        unsigned long long int bit1 = (arr & 2) >> 1;     // Extract the second least significant bit
-        unsigned long long int swapXor = (bit0 ^ bit1) << n; // Compute the XOR and shift
+        uint_fast64_t bit0 = arr & 1;            // Extract the least significant bit
+        uint_fast64_t bit1 = (arr & 2) >> 1;     // Extract the second least significant bit
+        uint_fast64_t swapXor = (bit0 ^ bit1) << n; // Compute the XOR and shift
         arr = (arr >> 1) | swapXor;                       // Update arr
     } while (arr != startinNumber);
     
@@ -36,13 +37,13 @@ int main()
 {
 
     sprintf(savingString, "");
-    unsigned long long int startingArr = 0b11;
+    uint_fast64_t startingArr = 0b11;
     
     clock_t totbegin = clock();
 
-    for(int n = 1; n <= 63; n++){
+    for(int n = 43; n <= 64; n++){
 
-        unsigned long long int counter = periodCalculation(n, startingArr);
+        uint_fast64_t counter = periodCalculation(n, startingArr);
 
         sprintf(savingString, "%s\n%d\t%llu", savingString, n, counter);
         

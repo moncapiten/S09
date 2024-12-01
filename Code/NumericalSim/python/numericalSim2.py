@@ -25,11 +25,12 @@ cycles = []
 
 
 
-for n in range(15, 16 ):
+for n in range(1, 17 ):
 
     print(f"n = {n}")
     # creating starting conditions
     arr = [ 1 for i in range(n+1) ]
+    sequence = []
     counter = 0
 
     print(str(arr) + "      " + str(counter))
@@ -41,6 +42,7 @@ for n in range(15, 16 ):
             arr[i] = arr[i - 1]
 #            print(i)
         arr[0] = swap
+        sequence.append(swap)
 
         counter += 1
         fancyprint(arr, counter)
@@ -49,6 +51,15 @@ for n in range(15, 16 ):
             break
     cycles.append(counter+1)
 
+    f = open("sequences.txt", "a")
+    swapSequence = ""
+    for i in sequence:
+        swapSequence += str(i)
+    
+    sequence = swapSequence
+
+    f.write(str(n) + "\t" + sequence + "\n")
+    f.close()
 
 print(cycles)
 
