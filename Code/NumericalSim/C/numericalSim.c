@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdint.h>
 #include <time.h>
+
 
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
 #define BYTE_TO_BINARY(byte)  \
@@ -14,16 +16,18 @@
 
 FILE *fptr;
 char savingString[256];
+//char sequence[256];
 
 int main()
 {
     sprintf(savingString, "");
-    unsigned long long int startingArr = 0b11;
-    unsigned long long int arr = startingArr;
+    uint_fast64_t startingArr = 0b11;
+    uint_fast64_t arr = startingArr;
     
     clock_t totbegin = clock();
-    for(unsigned long long int n = 1; n <= 32; n++){
-        unsigned long long int counter = 1;
+    for(uint_fast64_t n = 1; n <= 32; n++){
+        uint_fast64_t counter = 1;
+        uint_fast64_t sequence = 0;
         
         
 //        printf("--------\n n= %llu\n", n);
@@ -33,16 +37,17 @@ int main()
             
             counter++;
             // XOR of last two places and reinserting in the beginning
-            unsigned long long int swapXor = ( ( (arr & 0b10) >> 1 ) ^ ( arr & 0b1 ) ) << n;
+            uint_fast64_t swapXor = ( ( (arr & 0b10) >> 1 ) ^ ( arr & 0b1 ) ) << n;
             arr = ( arr >> 1 ) | swapXor;
             
 //            printf(BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY( arr ));
 //            printf("\n");
+            sequence = ( (sequence << 1) | (arr & 0b1) );
             
         } while ( (arr ^ startingArr) != 0);
         
         printf("\nIt took %llu cycles\n", counter);
-        sprintf(savingString, "%s\n%llu\t%llu", savingString, n, counter);
+        sprintf(savingString, "%s\n%llu\t%llu\t%llu", savingString, n, counter, sequence);
         
         startingArr = (startingArr<<1)+1;
         arr = startingArr;
