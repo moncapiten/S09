@@ -9,9 +9,10 @@ rawData = readmatrix(strcat(dataPosition, filename, int2str(n), '.txt'));
 
 tt = rawData(:, 1);
 clock = rawData(:, 2);
+s_clock = repelem(0.0015, length(clock));
 data = rawData(:, 3);
 s_data = repelem(0.0015, length(data));
-%s_vo = repelem(0.0015, length(vo));
+
 
 
 
@@ -43,54 +44,22 @@ delay = mean(delay_arr);
 s_delay = std(delay_arr);
 
 %ax1 = nexttile([1 2]);
-plot(tt, clock, Color = "#ff0000");
+errorbar(tt, clock, s_clock, Color = "#ff0000");
 hold on
 errorbar(tt, data, s_data, 'o', Color = "#0027bd");
 plot(tc_transition, cc_transition, 'o', Color = "#00ff00", MarkerSize = 10)
 plot(td_transition, dd_transition, 'x', Color = "yellow", MarkerSize = 10)
+
+plot(repelem(tc_transition( int32(length(tc_transition)/2) ), 2), [-1 6], Color = "magenta", LineStyle = "--")
+plot(repelem(td_transition( int32(length(tc_transition)/2) ), 2), [-1 6], Color = "magenta", LineStyle = "--")
+
 grid on
 grid minor
 
+dim = [0.4 0.76 0.1 0.1];
+annotateString  = strcat('$ \Delta_t = \, $', sprintf("%.2e", delay), '$ \pm $', sprintf("%.0e", s_delay), ' s');
+annotation('textbox', dim, 'String', annotateString, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'EdgeColor', 'black', "Interpreter", "latex");
 
-%{
-a_txt
-swapSequence = sequ(n);
-swapSequence = swapSequence{1}
-
-while(length(a_txt) < 2*length(swapSequence))
-    swapSequence = swapSequence(1:end-1);
-end
-
-np = KMP( swapSequence, a_txt);
-np
-
-
-
-
-
-
-
-
-sim_vo = encodeData(swapSequence, np, mean(diff(i_transition)), length(c_transition), length(tt));
-
-
-
-
-
-
-ax2 = nexttile([1 2]);
-plot(tt, sim_vo, Color = "magenta");
-ylim([-1, 6]);
-grid on
-grid minor
-
-
-
-
-legend(ax1, 'Clock', 'Data', 'Clock Transisions', 'Data at Clock Transition', Location= 'ne')
-ylabel(ax1, 'Voltage [V]')
-xlabel(ax1, 'Time [s]')
-%}
 
 legend( 'Clock', 'Data', 'Clock Transitions', 'Data Transition', Location= 'ne')
 ylabel( 'Voltage [V]')
