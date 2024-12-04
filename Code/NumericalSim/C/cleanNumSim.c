@@ -41,7 +41,7 @@ int main()
     
     clock_t totbegin = clock();
 
-    for(int n = 43; n <= 64; n++){
+    for(int n = 1; n <= 32; n++){
 
         uint_fast64_t counter = periodCalculation(n, startingArr);
 
