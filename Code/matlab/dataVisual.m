@@ -2,7 +2,7 @@ clear all;
 
 dataPosition = '../../Data/pseudo/';
 filename = 'data';
-n = 1;
+n = 11;
 
 % data import and creation of variance array
 rawData = readmatrix(strcat(dataPosition, filename, int2str(n), '.txt'));
@@ -57,7 +57,9 @@ errorbar(tt, data, s_data, 'o', Color = "#0027bd");
 grid on
 grid minor
 
-
+dim = [0.03 0.845 0.1 0.1];
+annotateString  = strcat('$ \textrm{acquisition}= \, $', a_txt(1:170));
+annotation('textbox', dim, 'String', annotateString, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'EdgeColor', 'black', "Interpreter", "latex");
 
 a_txt
 swapSequence = sequ(n);
@@ -72,16 +74,7 @@ np
 
 
 
-
-
-
-
-
 sim_vo = encodeData(swapSequence, np, mean(diff(i_transition)), length(c_transition), length(tt));
-
-
-
-
 
 
 ax2 = nexttile([1 2]);
@@ -93,13 +86,14 @@ grid minor
 
 
 
-legend(ax1, 'Clock', 'Data', 'Clock Transisions', 'Data at Clock Transition', Location= 'ne')
-ylabel(ax1, 'Voltage [V]')
-xlabel(ax1, 'Time [s]')
+%legend(ax1, 'Clock', 'Data', 'Clock Transisions', 'Data at Clock Transition', Location= 'ne')
+legend(ax1, 'Clock', 'Data', 'Data at Clock Transition', 'Location', 'ne', 'Interpreter', 'latex')
+ylabel(ax1, 'Voltage [V]', 'Interpreter', 'latex')
+%xlabel(ax1, 'Time [s]', 'Interpreter', 'latex')
 
 legend(ax2, 'Simulated Data', Location= 'ne')
-ylabel(ax2, 'Simulated Voltage [V]')
-xlabel(ax2, 'Time [s]')
+ylabel(ax2, 'Simulated Voltage [V]', 'Interpreter', 'latex')
+xlabel(ax2, 'Time [s]', 'Interpreter', 'latex')
 
 linkaxes([ax1, ax2], 'x');
 linkaxes([ax1, ax2], 'y');
@@ -107,7 +101,7 @@ linkaxes([ax1, ax2], 'y');
 hold off
 fontsize(14, "points");
 
-title(t, strcat('Measured and Simulated LFSR cycles - n =   ', int2str(n)), 'FontSize', 16);
+title(t, strcat('Measured and Simulated LFSR cycles - n =   ', int2str(n)), 'FontSize', 18, 'Interpreter', 'latex');
 
 function y = decodeData(arr, index)
     if(arr(index) > 2)
