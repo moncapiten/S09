@@ -103,6 +103,13 @@ fontsize(14, "points");
 
 title(t, strcat('Measured and Simulated LFSR cycles - n =   ', int2str(n)), 'FontSize', 18, 'Interpreter', 'latex');
 
+
+
+
+
+
+
+
 function y = decodeData(arr, index)
     if(arr(index) > 2)
         y = 1;
