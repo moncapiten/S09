@@ -7,7 +7,7 @@ char savingString[256];
 
 
 void saveSmth(char *str){
-    fptr = fopen("test2.txt", "a");
+    fptr = fopen("test+=48.txt", "a");
     fprintf(fptr, str);
     fclose(fptr);
     sprintf(savingString, "");
@@ -41,12 +41,18 @@ int main()
     
     clock_t totbegin = clock();
 
-    for(int n = 1; n <= 32; n++){
+    for(int n = 48; n <= 63; n++){
+
+        clock_t nbegin = clock();
 
         uint_fast64_t counter = periodCalculation(n, startingArr);
-
-        sprintf(savingString, "%s\n%d\t%llu", savingString, n, counter);
         
+        clock_t nend = clock();
+
+        double ntime_spent = (double)(nend - nbegin) / CLOCKS_PER_SEC;
+
+        sprintf(savingString, "%s\n%f s\n%d\t%llu", savingString, ntime_spent, n, counter);
+
         startingArr = (startingArr<<1) | 1;
 
         saveSmth(savingString);
@@ -57,7 +63,7 @@ int main()
 
     clock_t totend = clock();
     double time_spent = (double)(totend - totbegin) / CLOCKS_PER_SEC;
-    sprintf(savingString, "%s\nTotal time spent: %f s", savingString, time_spent);
+    sprintf(savingString, "%s\n\nTotal time spent: %f s", savingString, time_spent);
     // Saves computed data to file
     
     
